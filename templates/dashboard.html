@@ -47,6 +47,9 @@
             <canvas id="expenseChart"></canvas>
 
         </div> 
+
+        {% if expenses %}
+
         <div class="row">
 
             {% for expense in expenses %}
@@ -85,6 +88,16 @@
 
         </div>
 
+        {% else %}
+
+        <div class="alert alert-secondary text-center">
+
+            <h4>No expenses added yet</h4>
+
+        </div>
+
+        {% endif %}
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -104,12 +117,25 @@ new Chart(ctx, {
                 {{ travel_total }},
                 {{ shopping_total }},
                 {{ bills_total }}
+            ],
+            
+            backgroundColor: [
+                '#ff6384',
+                '#36a2eb',
+                '#ffce56',
+                '#4bc0c0'
             ]
         }]
     }
 });
 
 </script>
+
+<div class="text-center mt-5 p-3 bg-dark text-white">
+
+    Expense Analysis System © 2026
+
+</div>
 
 </body>
 </html>
