@@ -10,7 +10,7 @@ class Expense(models.Model):
         ('Bills', 'Bills'),
     ]
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     amount = models.FloatField()
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
     description = models.TextField()
