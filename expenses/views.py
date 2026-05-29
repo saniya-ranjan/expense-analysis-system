@@ -3,11 +3,15 @@ from .models import Expense
 from .forms import ExpenseForm
 from django.contrib.auth.models import User
 from datetime import datetime
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
 
-
+@login_required 
 def dashboard(request):
 
-    expenses = Expense.objects.all()
+    expenses = Expense.objects.filter(user=request.user)
 
     total_expense = 0
 
@@ -80,7 +84,7 @@ def dashboard(request):
 
     return render(request, 'dashboard.html', context)
 
-
+@login_required
 def add_expense(request):
 
     if request.method == 'POST':
@@ -132,3 +136,61 @@ def edit_expense(request, id):
         form = ExpenseForm(instance=expense)
 
     return render(request, 'add_expense.html', {'form': form})
+
+def register(request):
+
+    print("REGISTER VIEW HIT")
+
+    if request.method == 'POST':
+
+        print("POST REQUEST RECEIVED")
+
+        form = UserCreationForm(request.POST)
+
+        print(form.errors)
+
+        if form.is_valid():
+
+            print("FORM IS VALID")
+
+            user = form.save()
+
+            login(request, user)
+
+            return redirect('/')
+
+        else:
+
+            print("FORM INVALID")
+
+    else:
+
+        form = UserCreationForm()
+
+    return render(request, 'register.html', {'form': form})
+
+def user_login(request):
+
+    if request.method == 'POST':
+
+        form = AuthenticationForm(request, data=request.POST)
+
+        if form.is_valid():
+
+            user = form.get_user()
+
+            login(request, user)
+
+            return redirect('/')
+
+    else:
+
+        form = AuthenticationForm()
+
+    return render(request, 'login.html', {'form': form})
+
+def user_logout(request):
+
+    logout(request)
+
+    return redirect('login')

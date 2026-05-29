@@ -14,15 +14,27 @@
 
     <nav class="navbar navbar-dark bg-dark">
 
-        <div class="container-fluid">
+    <div class="container-fluid">
 
-            <span class="navbar-brand mb-0 h1">
-                Expense Analysis System
-            </span>
+        <span class="navbar-brand mb-0 h1">
+            Expense Analysis System
+        </span>
+
+        <div>
+
+            <button onclick="toggleDarkMode()" class="btn btn-secondary me-2">
+                🌙 Dark Mode
+            </button>
+
+            <a href="/logout/" class="btn btn-danger">
+                Logout
+            </a>
 
         </div>
 
-    </nav>
+    </div>
+
+</nav>
 
     <div class="container mt-5">
 
@@ -136,6 +148,17 @@ new Chart(ctx, {
     Expense Analysis System © 2026
 
 </div>
+
+<script>
+
+function toggleDarkMode(){
+
+    document.body.classList.toggle("bg-dark");
+    document.body.classList.toggle("text-light");
+
+}
+
+</script>
 
 </body>
 </html>
