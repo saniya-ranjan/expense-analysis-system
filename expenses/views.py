@@ -7,6 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 
 @login_required 
 def dashboard(request):
@@ -181,7 +182,11 @@ def user_login(request):
 
             login(request, user)
 
-            return redirect('/')
+            return HttpResponse("LOGIN SUCCESS")
+
+        else:
+
+            return HttpResponse(form.errors)
 
     else:
 
